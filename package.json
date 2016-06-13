@@ -15,6 +15,7 @@
     "eslint-plugin-import": "^1.8.1"
   },
   "dependencies": {
+    "graphql": "^0.6.0",
     "koa": "^1.2.0",
     "mysql": "^2.11.1",
     "sequelize": "^3.23.3"
