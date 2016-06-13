@@ -34,3 +34,16 @@ export const create = {
   },
   resolve: (_, args) => ItemModel.create(args),
 };
+
+export const sell = {
+  type: ItemSchema,
+  description: 'Set the provided item and set the soldAt property to NOW.',
+  args: {
+    id: {
+      type: new GraphQLNonNull(GraphQLInt),
+    },
+  },
+  resolve: (_, { id }) => ItemModel
+    .findById(id)
+    .then(item => item.update({ soldOn: new Date() })),
+};
