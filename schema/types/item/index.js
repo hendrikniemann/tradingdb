@@ -3,16 +3,17 @@ import { GraphQLList, GraphQLInt } from 'graphql';
 import ItemSchema from './schema';
 import ItemModel from './model';
 
-export const Multiple = {
+export const multiple = {
   type: new GraphQLList(ItemSchema),
   resolve: () => ItemModel.findAll(),
 };
 
-export const Single = {
+export const single = {
   type: ItemSchema,
   args: {
     id: {
-      type: GraphQLInt,
+      type: new GraphQLNonNull(GraphQLInt),
+      description: 'The unique id of this item.',
     },
   },
   resolve: (_, { id }) => ItemModel.findById(id),

@@ -1,7 +1,7 @@
 import { GraphQLObjectType } from 'graphql';
 import {
-  Multiple as ItemMultiple,
-  Single as ItemSingle,
+  multiple as ItemMultiple,
+  single as ItemSingle,
 } from './types/item';
 
 const Query = new GraphQLObjectType({
