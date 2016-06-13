@@ -1,7 +1,5 @@
 import connection from '../../connection';
 import Sequelize from 'sequelize';
-import User from '../user/model';
-import Offer from '../offer/model';
 
 const Item = connection.define('item', {
   boughtOn: {
@@ -24,8 +22,5 @@ const Item = connection.define('item', {
 }, {
   paranoid: true,
 });
-
-Item.belongsTo(User);
-Item.hasMany(Offer);
 
 export default Item;

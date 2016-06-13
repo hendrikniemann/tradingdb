@@ -4,7 +4,7 @@ import { Multiple as ItemMultiple } from './types/item';
 const Query = new GraphQLObjectType({
   name: 'query',
   fields: {
-    item: ItemMultiple,
+    items: ItemMultiple,
   },
 });
 
