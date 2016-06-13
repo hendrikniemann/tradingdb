@@ -4,12 +4,12 @@ import {
   single as ItemSingle,
 } from './types/item';
 
-const Query = new GraphQLObjectType({
-  name: 'query',
+const QueryType = new GraphQLObjectType({
+  name: 'QueryType',
   fields: {
     item: ItemSingle,
     items: ItemMultiple,
   },
 });
 
-export default Query;
+export default QueryType;

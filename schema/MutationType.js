@@ -3,11 +3,11 @@ import {
   create as ItemCreate,
 } from './types/item';
 
-const Mutation = new GraphQLObjectType({
-  name: 'Mutation',
+const MutationType = new GraphQLObjectType({
+  name: 'MutationType',
   fields: () => ({
     createItem: ItemCreate,
   }),
 });
 
-export default Mutation;
+export default MutationType;
