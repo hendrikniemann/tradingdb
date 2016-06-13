@@ -21,8 +21,23 @@ const Item = new GraphQLObjectType({
     },
     bought: {
       type: GraphQLInt,
-      description: 'The price at which the item was aquired.',
+      description: 'The price at which the item was acquired.',
       resolve: item => item.bought,
+    },
+    boughtOn: {
+      type: GraphQLString,
+      description: 'Date of the acquisition of the item.',
+      resolve: item => item.boughtOn.toISOString(),
+    },
+    soldOn: {
+      type: GraphQLString,
+      description: 'Date on which the item was sold.',
+      resolve: item => {
+        if (item.soldOn) {
+          return item.soldOn.toISOString();
+        }
+        return null;
+      },
     },
   }),
 });
