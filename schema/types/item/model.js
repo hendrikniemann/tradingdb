@@ -5,11 +5,11 @@ const Item = connection.define('item', {
   boughtOn: {
     type: Sequelize.DATE,
     allowNull: false,
-    default: Sequelize.NOW,
+    defaultValue: Sequelize.NOW,
   },
   soldOn: {
     type: Sequelize.DATE,
-    default: null,
+    defaultValue: null,
   },
   description: {
     type: Sequelize.STRING,
