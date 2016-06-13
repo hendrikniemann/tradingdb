@@ -1,4 +1,4 @@
-import { GraphQLList, GraphQLInt } from 'graphql';
+import { GraphQLList, GraphQLInt, GraphQLString, GraphQLNonNull } from 'graphql';
 
 import ItemSchema from './schema';
 import ItemModel from './model';
@@ -17,4 +17,17 @@ export const single = {
     },
   },
   resolve: (_, { id }) => ItemModel.findById(id),
+};
+
+export const create = {
+  type: ItemSchema,
+  args: {
+    description: {
+      type: new GraphQLNonNull(GraphQLString),
+    },
+    bought: {
+      type: new GraphQLNonNull(GraphQLInt),
+    },
+  },
+  resolve: (_, args) => ItemModel.create(args),
 };
