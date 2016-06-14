@@ -1,7 +1,7 @@
 import connection from '../../connection';
 import Sequelize from 'sequelize';
 
-const Item = connection.define('item', {
+const ItemModel = connection.define('item', {
   boughtOn: {
     type: Sequelize.DATE,
     allowNull: false,
@@ -23,4 +23,4 @@ const Item = connection.define('item', {
   paranoid: true,
 });
 
-export default Item;
+export default ItemModel;

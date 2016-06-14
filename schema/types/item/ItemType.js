@@ -5,7 +5,7 @@ import {
   GraphQLInt,
 } from 'graphql';
 
-const Item = new GraphQLObjectType({
+const ItemType = new GraphQLObjectType({
   name: 'Item',
   description: 'A single item which is on sale or sold.',
   fields: () => ({
@@ -42,4 +42,4 @@ const Item = new GraphQLObjectType({
   }),
 });
 
-export default Item;
+export default ItemType;

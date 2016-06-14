@@ -1,16 +1,16 @@
 import { GraphQLList, GraphQLInt, GraphQLString, GraphQLNonNull } from 'graphql';
 
-import ItemSchema from './schema';
-import ItemModel from './model';
+import ItemType from './ItemType';
+import ItemModel from './ItemModel';
 
 export const multiple = {
-  type: new GraphQLList(ItemSchema),
+  type: new GraphQLList(ItemType),
   description: 'Select all items from the database.',
   resolve: () => ItemModel.findAll(),
 };
 
 export const single = {
-  type: ItemSchema,
+  type: ItemType,
   description: 'Select a single item by its id.',
   args: {
     id: {
@@ -22,7 +22,7 @@ export const single = {
 };
 
 export const create = {
-  type: ItemSchema,
+  type: ItemType,
   description: 'Create a new item in the database.',
   args: {
     description: {
@@ -36,7 +36,7 @@ export const create = {
 };
 
 export const sell = {
-  type: ItemSchema,
+  type: ItemType,
   description: 'Set the provided item and set the soldAt property to NOW.',
   args: {
     id: {
