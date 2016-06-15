@@ -1,14 +1,10 @@
 import { GraphQLObjectType } from 'graphql';
 
-import createItem from '../mutations/createItem';
-import sellItem from '../mutations/sellItem';
+import * as mutations from '../mutations';
 
 const MutationType = new GraphQLObjectType({
   name: 'MutationType',
-  fields: () => ({
-    createItem,
-    sellItem,
-  }),
+  fields: mutations,
 });
 
 export default MutationType;

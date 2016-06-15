@@ -3,8 +3,7 @@ import graphqlMiddleware from 'koa-graphql';
 import mount from 'koa-mount';
 import bodyParser from 'koa-bodyparser';
 
-import './schema/types/associations';
-import Schema from './schema';
+import Schema from './types/Schema';
 
 const app = koa();
 

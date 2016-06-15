@@ -1,9 +1,9 @@
 import { GraphQLNonNull, GraphQLInt } from 'graphql';
 
-import UserModel from '../models/UserModel';
 import UserType from '../types/UserType';
+import { UserModel } from '../models';
 
-export const user = {
+const user = {
   type: UserType,
   args: {
     id: {
@@ -13,3 +13,5 @@ export const user = {
   },
   resolve: (_, { id }) => UserModel.findById(id),
 };
+
+export default user;
