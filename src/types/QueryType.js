@@ -1,7 +1,8 @@
 import { GraphQLObjectType } from 'graphql';
 
-import { item, items } from './types/item';
-import { user } from './types/user';
+import item from '../queries/item';
+import items from '../queries/items';
+import user from '../queries/user';
 
 const QueryType = new GraphQLObjectType({
   name: 'QueryType',

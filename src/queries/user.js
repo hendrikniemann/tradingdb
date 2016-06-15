@@ -1,7 +1,7 @@
 import { GraphQLNonNull, GraphQLInt } from 'graphql';
 
-import UserModel from './UserModel';
-import UserType from './UserType';
+import UserModel from '../models/UserModel';
+import UserType from '../types/UserType';
 
 export const user = {
   type: UserType,

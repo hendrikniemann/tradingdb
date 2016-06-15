@@ -1,5 +1,7 @@
 import { GraphQLObjectType } from 'graphql';
-import { createItem, sellItem } from './types/item';
+
+import createItem from '../mutations/createItem';
+import sellItem from '../mutations/sellItem';
 
 const MutationType = new GraphQLObjectType({
   name: 'MutationType',
