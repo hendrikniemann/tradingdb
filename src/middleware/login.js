@@ -19,7 +19,10 @@ export default function* login() {
   const passwordOk = yield compare(password, user.password);
   this.assert(passwordOk, 400, 'Wrong login credentials!');
 
-  const token = yield sign({ user }, config.secret, {
+  const payload = {
+    user: { id: user.id, email: user.email },
+  };
+  const token = yield sign(payload, config.secret, {
     expiresIn: config.sessionLength,
   });
 
