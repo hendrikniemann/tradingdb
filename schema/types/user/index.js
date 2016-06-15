@@ -11,5 +11,5 @@ export const user = {
       description: 'The id of the requested user',
     },
   },
-  resolve: (_, { id }) => UserModel.getById(id),
+  resolve: (_, { id }) => UserModel.findById(id),
 };
