@@ -1,7 +1,7 @@
-import Connection from '../schema/connection';
+import connection from '../src/models/connection';
 
-import '../schema/types/associations';
+import '../src/models/';
 
-Connection.sync({ force: true })
+connection.sync({ force: true })
   .then(() => console.log('Successfully created DB from Schema'))
   .catch(error => { throw error; });
