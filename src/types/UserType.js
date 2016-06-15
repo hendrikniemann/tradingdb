@@ -1,5 +1,5 @@
 import { GraphQLObjectType, GraphQLInt, GraphQLString, GraphQLList } from 'graphql';
-import ItemSchema from '../item/ItemType';
+import ItemSchema from './ItemType';
 
 const UserType = new GraphQLObjectType({
   name: 'User',
