@@ -1,4 +1,4 @@
-import connection from '../../connection';
+import connection from './connection';
 import Sequelize from 'sequelize';
 
 const ItemModel = connection.define('item', {
