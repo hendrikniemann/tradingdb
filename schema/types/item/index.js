@@ -3,13 +3,7 @@ import { GraphQLList, GraphQLInt, GraphQLString, GraphQLNonNull } from 'graphql'
 import ItemType from './ItemType';
 import ItemModel from './ItemModel';
 
-export const multiple = {
-  type: new GraphQLList(ItemType),
-  description: 'Select all items from the database.',
-  resolve: () => ItemModel.findAll(),
-};
-
-export const single = {
+export const item = {
   type: ItemType,
   description: 'Select a single item by its id.',
   args: {
@@ -21,7 +15,13 @@ export const single = {
   resolve: (_, { id }) => ItemModel.findById(id),
 };
 
-export const create = {
+export const items = {
+  type: new GraphQLList(ItemType),
+  description: 'Select all items from the database.',
+  resolve: () => ItemModel.findAll(),
+};
+
+export const createItem = {
   type: ItemType,
   description: 'Create a new item in the database.',
   args: {
@@ -35,7 +35,7 @@ export const create = {
   resolve: (_, args) => ItemModel.create(args),
 };
 
-export const sell = {
+export const sellItem = {
   type: ItemType,
   description: 'Set the provided item and set the soldAt property to NOW.',
   args: {
@@ -45,5 +45,5 @@ export const sell = {
   },
   resolve: (_, { id }) => ItemModel
     .findById(id)
-    .then(item => item.update({ soldOn: new Date() })),
+    .then(itm => itm.update({ soldOn: new Date() })),
 };
