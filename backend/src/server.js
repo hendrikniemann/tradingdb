@@ -12,9 +12,9 @@ const app = koa();
 
 app.use(bodyParser());
 
-app.use(authMiddleware);
+// app.use(authMiddleware);
 
-app.use(mount('/login', loginMiddleware));
+// app.use(mount('/login', loginMiddleware));
 
 app.use(mount('/graphql', graphqlMiddleware((_, context) => ({
   schema: Schema,
