@@ -21,6 +21,10 @@ const ItemType = new GraphQLObjectType({
       type: GraphQLInt,
       description: 'The price at which the item was acquired.',
     },
+    sold: {
+      type: GraphQLInt,
+      description: 'The price at which the item was sold.',
+    },
     boughtOn: {
       type: GraphQLString,
       description: 'Date of the acquisition of the item.',
