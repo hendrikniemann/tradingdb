@@ -1,4 +1,4 @@
-import { GraphQLInt, GraphQLNonNull } from 'graphql';
+import { GraphQLID, GraphQLInt, GraphQLNonNull } from 'graphql';
 
 import ItemType from '../types/ItemType';
 import ItemModel from '../models/ItemModel';
@@ -8,12 +8,17 @@ const sellItem = {
   description: 'Set the provided item and set the soldAt property to NOW.',
   args: {
     id: {
+      type: new GraphQLNonNull(GraphQLID),
+      description: 'The id of the item that was sold.',
+    },
+    sold: {
       type: new GraphQLNonNull(GraphQLInt),
+      description: 'The price that the item was sold for.',
     },
   },
-  resolve: (_, { id }) => ItemModel
+  resolve: (_, { id, sold }) => ItemModel
     .findById(id)
-    .then(itm => itm.update({ soldOn: new Date() })),
+    .then(i => i.update({ soldOn: new Date(), sold })),
 };
 
 export default sellItem;
