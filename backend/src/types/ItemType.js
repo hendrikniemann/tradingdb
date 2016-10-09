@@ -12,17 +12,14 @@ const ItemType = new GraphQLObjectType({
     id: {
       type: GraphQLID,
       description: 'A unique identifier for this item.',
-      resolve: item => item.id,
     },
     description: {
       type: GraphQLString,
       description: 'A string that defines the type of the item.',
-      resolve: item => item.description,
     },
     bought: {
       type: GraphQLInt,
       description: 'The price at which the item was acquired.',
-      resolve: item => item.bought,
     },
     boughtOn: {
       type: GraphQLString,

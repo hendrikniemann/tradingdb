@@ -1,4 +1,5 @@
 import { GraphQLInt, GraphQLNonNull } from 'graphql';
+import { resolver } from 'graphql-sequelize';
 
 import ItemType from '../types/ItemType';
 import { ItemModel } from '../models';
@@ -12,7 +13,7 @@ const item = {
       description: 'The unique id of this item.',
     },
   },
-  resolve: (_, { id }) => ItemModel.findById(id),
+  resolve: resolver(ItemModel),
 };
 
 export default item;

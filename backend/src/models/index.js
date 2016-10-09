@@ -1,7 +1,7 @@
 import UserModel from './UserModel';
 import ItemModel from './ItemModel';
 
-UserModel.hasMany(ItemModel);
-ItemModel.belongsTo(UserModel);
+UserModel.ItemModels = UserModel.hasMany(ItemModel);
+ItemModel.UserModel = ItemModel.belongsTo(UserModel);
 
 export { UserModel, ItemModel };

@@ -1,4 +1,5 @@
 import { GraphQLNonNull, GraphQLInt } from 'graphql';
+import { resolver } from 'graphql-sequelize';
 
 import UserType from '../types/UserType';
 import { UserModel } from '../models';
@@ -11,7 +12,7 @@ const user = {
       description: 'The id of the requested user',
     },
   },
-  resolve: (_, { id }) => UserModel.findById(id),
+  resolve: resolver(UserModel),
 };
 
 export default user;
