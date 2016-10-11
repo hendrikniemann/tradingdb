@@ -1,12 +1,16 @@
 import React from 'react';
-import MenuBar from '../components/MenuBar';
-import ItemList from '../components/ItemList';
+import { BrowserRouter as Router, Match } from 'react-router';
+
+import Login from './Login';
+import Overview from './Overview';
 
 export default function App({ data }) {
   return (
-    <div>
-      <MenuBar />
-      <ItemList />
-    </div>
+    <Router>
+      <div>
+        <Match pattern="/login" component={Login} />
+        <Match pattern="/app" component={Overview} />
+      </div>
+    </Router>
   );
 }
