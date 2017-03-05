@@ -1,3 +1,4 @@
+/* @flow */
 import { GraphQLID, GraphQLInt, GraphQLNonNull } from 'graphql';
 
 import ItemType from '../types/ItemType';
@@ -16,7 +17,7 @@ const sellItem = {
       description: 'The price that the item was sold for.',
     },
   },
-  resolve: (_, { id, sold }) => ItemModel
+  resolve: (_: any, { id, sold }: { id: string, sold: number }) => ItemModel
     .findById(id)
     .then(i => i.update({ soldOn: new Date(), sold })),
 };

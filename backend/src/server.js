@@ -1,25 +1,35 @@
-import koa from 'koa';
-import graphqlMiddleware from 'koa-graphql';
+/* @flow */
+import Koa from 'koa';
+import graphQLHttp from 'koa-graphql';
 import mount from 'koa-mount';
+import convert from 'koa-convert';
 import bodyParser from 'koa-bodyparser';
-
-import Schema from './types/Schema';
-
+import logger from 'koa-logger';
+import Schema from './Schema';
 import loginMiddleware from './middleware/login';
 import authMiddleware from './middleware/auth';
 
-const app = koa();
+const app = new Koa();
+app.use(convert(logger()));
 
-app.use(bodyParser());
+// Login endpoint provides RESTlike login API
+const loginEndpoint = new Koa();
+loginEndpoint.use(convert(bodyParser()));
+loginEndpoint.use(loginMiddleware);
+app.use(mount('/login', loginEndpoint));
 
-// app.use(authMiddleware);
-
-// app.use(mount('/login', loginMiddleware));
-
-app.use(mount('/graphql', graphqlMiddleware((_, context) => ({
+// GraphQL endpoint provides GraphQL API
+const graphQLEndpoint = new Koa();
+graphQLEndpoint.use(authMiddleware);
+graphQLEndpoint.use(convert(graphQLHttp({
   schema: Schema,
-  graphiql: true,
-  context,
-}))));
+  graphiql: process.env.NODE_ENV !== 'production',
+})));
+app.use(mount('/graphql', graphQLEndpoint));
+
+
+app.use(async (ctx) => {
+  ctx.redirect('/graphql');
+});
 
 app.listen(4000);

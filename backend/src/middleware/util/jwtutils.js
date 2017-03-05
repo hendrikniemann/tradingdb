@@ -1,12 +1,13 @@
+/* @flow */
 import jwt from 'jsonwebtoken';
-import config from '../../config/config';
+import config from '../../config/config.json';
 
 const SECRET = config.secret;
 const SIGN_OPTIONS = {
   expiresIn: config.sessionLength,
 };
 
-export function verify(token) {
+export function verify(token: string): Promise<any> {
   return new Promise((resolve, reject) => {
     jwt.verify(token, SECRET, (err, payload) => {
       if (err) {
@@ -17,7 +18,7 @@ export function verify(token) {
   });
 }
 
-export function sign(payload) {
+export function sign(payload: any): Promise<string> {
   return new Promise((resolve, reject) => {
     jwt.sign(payload, SECRET, SIGN_OPTIONS, (err, token) => {
       if (err) {

@@ -1,3 +1,4 @@
+/* @flow */
 import {
   GraphQLObjectType,
   GraphQLString,
@@ -33,12 +34,7 @@ const ItemType = new GraphQLObjectType({
     soldOn: {
       type: GraphQLString,
       description: 'Date on which the item was sold.',
-      resolve: item => {
-        if (item.soldOn) {
-          return item.soldOn.toISOString();
-        }
-        return null;
-      },
+      resolve: item => item.soldOn && item.soldOn.toISOString(),
     },
   }),
 });

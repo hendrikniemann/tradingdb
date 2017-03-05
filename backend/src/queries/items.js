@@ -1,3 +1,4 @@
+/* @flow */
 import { GraphQLList } from 'graphql';
 
 import ItemType from '../types/ItemType';

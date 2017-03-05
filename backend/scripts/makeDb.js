@@ -1,3 +1,4 @@
+/* @flow */
 /* eslint-disable no-console */
 import connection from '../src/models/connection';
 import { UserModel, ItemModel } from '../src/models/';
@@ -29,4 +30,4 @@ connection.sync({ force: true })
       }],
     }).then(() => console.log('Data created.'));
   })
-  .catch(error => { throw error; });
+  .catch((error) => { throw error; });

@@ -1,4 +1,5 @@
-// import bcrypt from 'bcrypt';
+/* @flow */
+import bcrypt from 'bcrypt';
 import promisify from 'es6-promisify';
 import jwt from 'jsonwebtoken';
 import addSeconds from 'date-fns/add_seconds';
@@ -6,23 +7,23 @@ import addSeconds from 'date-fns/add_seconds';
 import config from '../config/config.json';
 import { UserModel } from '../models';
 
-// const compare = promisify(bcrypt.compare);
+const compare = promisify(bcrypt.compare);
 const sign = promisify(jwt.sign);
 
-export default function* login() {
+export default async function login() {
   const { email, password } = this.request.body;
   this.assert(email && password, 400, 'Login needs email and password!');
 
-  const user = yield UserModel.findOne({ email });
+  const user = await UserModel.findOne({ email });
   this.assert(user, 400, 'Wrong login credentials!');
 
-  // const passwordOk = yield compare(password, user.password);
-  // this.assert(passwordOk, 400, 'Wrong login credentials!');
+  const passwordOk = await compare(password, user.password);
+  this.assert(passwordOk, 400, 'Wrong login credentials!');
 
   const payload = {
     user: { id: user.id, email: user.email },
   };
-  const token = yield sign(payload, config.secret, {
+  const token = await sign(payload, config.secret, {
     expiresIn: config.sessionLength,
   });
 

@@ -1,3 +1,4 @@
+/* @flow */
 import { GraphQLObjectType, GraphQLInt, GraphQLString, GraphQLList } from 'graphql';
 import { resolver } from 'graphql-sequelize';
 

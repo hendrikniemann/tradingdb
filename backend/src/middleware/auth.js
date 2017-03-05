@@ -1,14 +1,11 @@
+/* @flow */
 import { verify } from './util/jwtutils';
 
-export default function *auth(next) {
-  const token = this.cookies.get('jwt');
+export default async function auth(ctx: any) {
+  const token = ctx.cookies.get('jwt');
   try {
-    this.state.user = yield verify(token).then(payload => payload.user);
+    ctx.state.user = await verify(token).then(payload => payload.user);
   } catch (error) {
-    this.state.user = null;
+    ctx.state.user = null;
   }
-
-  console.log(this.state.user);
-
-  yield next;
 }

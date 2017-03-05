@@ -1,3 +1,4 @@
+/* @flow */
 import { GraphQLID, GraphQLNonNull, GraphQLBoolean } from 'graphql';
 
 import ItemModel from '../models/ItemModel';
@@ -11,7 +12,7 @@ const deleteItem = {
       description: 'The unique id of the item.',
     },
   },
-  resolve: (_, { id }) => ItemModel.destroy({ where: { id } }),
+  resolve: (_: any, { id }: { id: string }) => ItemModel.destroy({ where: { id } }),
 };
 
 export default deleteItem;

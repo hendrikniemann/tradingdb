@@ -1,3 +1,4 @@
+/* @flow */
 import { GraphQLInt, GraphQLString, GraphQLNonNull } from 'graphql';
 
 import ItemType from '../types/ItemType';
@@ -14,7 +15,7 @@ const createItem = {
       type: new GraphQLNonNull(GraphQLInt),
     },
   },
-  resolve: (_, args) => ItemModel.create(args),
+  resolve: (_: any, args: { description: string, bought: number }) => ItemModel.create(args),
 };
 
 export default createItem;

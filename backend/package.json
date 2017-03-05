@@ -4,33 +4,89 @@
   "description": "Backend for Trading DB",
   "main": "server.js",
   "scripts": {
-    "start": "babel-node src/server.js",
+    "start": "nodemon -r babel-register src/server.js",
+    "build": "babel src -d bin",
+    "lint": "eslint src/ && flow",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "hendrikniemann",
   "license": "MIT",
   "devDependencies": {
-    "babel-preset-es2015-node5": "^1.2.0",
-    "eslint": "^2.12.0",
-    "eslint-config-airbnb-base": "^3.0.1",
-    "eslint-plugin-import": "^1.8.1",
-    "graphiql": "^0.7.2",
+    "babel-cli": "^6.23.0",
+    "babel-eslint": "^7.1.1",
+    "babel-plugin-syntax-flow": "^6.18.0",
+    "babel-plugin-transform-flow-strip-types": "^6.22.0",
+    "babel-preset-env": "^1.2.0",
+    "babel-register": "^6.23.0",
+    "eslint": "^3.17.0",
+    "eslint-config-airbnb-base": "^11.1.1",
+    "eslint-plugin-flowtype": "^2.30.0",
+    "eslint-plugin-import": "^2.2.0",
+    "flow-bin": "^0.40.0",
+    "graphiql": "^0.9.3",
+    "nodemon": "^1.11.0",
     "react": "^15.1.0",
     "react-dom": "^15.1.0"
   },
   "dependencies": {
-    "bcrypt": "^0.8.7",
+    "bcrypt": "^1.0.2",
     "date-fns": "^1.3.0",
-    "es6-promisify": "^4.1.0",
-    "graphql": "^0.7.1",
+    "es6-promisify": "^5.0.0",
+    "graphql": "^0.9.1",
     "graphql-relay": "^0.4.3",
-    "graphql-sequelize": "^3.0.0-1",
+    "graphql-sequelize": "^5.2.1",
     "jsonwebtoken": "^7.0.1",
-    "koa": "^1.2.0",
+    "koa": "^2.0.1",
     "koa-bodyparser": "^2.2.0",
-    "koa-graphql": "^0.5.3",
-    "koa-mount": "^1.3.0",
+    "koa-convert": "^1.2.0",
+    "koa-graphql": "^0.6.2",
+    "koa-logger": "^2.0.1",
+    "koa-mount": "^2.0.0",
     "mysql": "^2.11.1",
     "sequelize": "^3.23.3"
+  },
+  "eslintConfig": {
+    "extends": [
+      "airbnb-base",
+      "plugin:flowtype/recommended"
+    ],
+    "parser": "babel-eslint",
+    "plugins": [
+      "flowtype"
+    ],
+    "env": {
+      "jest": true
+    },
+    "rules": {
+      "no-param-reassign": [
+        "error",
+        {
+          "props": false
+        }
+      ],
+      "flowtype/require-valid-file-annotation": [
+        2,
+        "always",
+        {
+          "annotationStyle": "block"
+        }
+      ]
+    }
+  },
+  "babel": {
+    "presets": [
+      [
+        "env",
+        {
+          "targets": {
+            "node": true
+          }
+        }
+      ]
+    ],
+    "plugins": [
+      "syntax-flow",
+      "transform-flow-strip-types"
+    ]
   }
 }

@@ -1,3 +1,4 @@
+/* @flow */
 import { GraphQLInt, GraphQLNonNull } from 'graphql';
 import { resolver } from 'graphql-sequelize';
 

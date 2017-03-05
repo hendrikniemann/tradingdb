@@ -1,5 +1,6 @@
-import connection from './connection';
+/* @flow */
 import Sequelize from 'sequelize';
+import connection from './connection';
 
 const ItemModel = connection.define('item', {
   description: {

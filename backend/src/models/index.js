@@ -1,3 +1,4 @@
+/* @flow */
 import UserModel from './UserModel';
 import ItemModel from './ItemModel';
 
