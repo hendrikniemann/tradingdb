@@ -3,9 +3,9 @@ import { GraphQLObjectType } from 'graphql';
 
 import * as queries from '../queries';
 
-const QueryType = new GraphQLObjectType({
+const Query = new GraphQLObjectType({
   name: 'QueryType',
   fields: queries,
 });
 
-export default QueryType;
+export default Query;

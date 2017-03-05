@@ -2,11 +2,11 @@
 import { GraphQLInt, GraphQLNonNull } from 'graphql';
 import { resolver } from 'graphql-sequelize';
 
-import ItemType from '../types/ItemType';
+import Item from '../types/Item';
 import { ItemModel } from '../../models';
 
 const item = {
-  type: ItemType,
+  type: Item,
   description: 'Select a single item by its id.',
   args: {
     id: {

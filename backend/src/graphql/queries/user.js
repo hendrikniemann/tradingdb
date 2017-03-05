@@ -2,11 +2,11 @@
 import { GraphQLNonNull, GraphQLInt } from 'graphql';
 import { resolver } from 'graphql-sequelize';
 
-import UserType from '../types/UserType';
+import User from '../types/User';
 import { UserModel } from '../../models';
 
 const user = {
-  type: UserType,
+  type: User,
   args: {
     id: {
       type: new GraphQLNonNull(GraphQLInt),

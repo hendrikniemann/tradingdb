@@ -1,11 +1,11 @@
 /* @flow */
 import { GraphQLList } from 'graphql';
 
-import ItemType from '../types/ItemType';
+import Item from '../types/Item';
 import { ItemModel } from '../../models';
 
 const items = {
-  type: new GraphQLList(ItemType),
+  type: new GraphQLList(Item),
   description: 'Select all items from the database.',
   resolve: () => ItemModel.findAll(),
 };

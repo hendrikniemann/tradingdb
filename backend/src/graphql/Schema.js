@@ -1,11 +1,11 @@
 /* @flow */
 import { GraphQLSchema } from 'graphql/type';
-import QueryType from './types/QueryType';
-import MutationType from './types/MutationType';
+import Query from './types/Query';
+import Mutation from './types/Mutation';
 
 const Schema = new GraphQLSchema({
-  query: QueryType,
-  mutation: MutationType,
+  query: Query,
+  mutation: Mutation,
 });
 
 export default Schema;

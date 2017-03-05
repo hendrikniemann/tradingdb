@@ -1,11 +1,11 @@
 /* @flow */
 import { GraphQLInt, GraphQLString, GraphQLNonNull } from 'graphql';
 
-import ItemType from '../types/ItemType';
+import Item from '../types/Item';
 import { ItemModel } from '../../models';
 
 const createItem = {
-  type: ItemType,
+  type: Item,
   description: 'Create a new item in the database.',
   args: {
     description: {

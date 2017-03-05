@@ -2,10 +2,10 @@
 import { GraphQLObjectType, GraphQLID, GraphQLString, GraphQLList, GraphQLNonNull } from 'graphql';
 import { resolver } from 'graphql-sequelize';
 
-import ItemSchema from './ItemType';
+import Item from './Item';
 import { UserModel } from '../../models';
 
-const UserType = new GraphQLObjectType({
+const User = new GraphQLObjectType({
   name: 'User',
   description: 'A user of the system',
   fields: () => ({
@@ -18,11 +18,11 @@ const UserType = new GraphQLObjectType({
       description: 'The user\'s email address.',
     },
     items: {
-      type: new GraphQLList(ItemSchema),
+      type: new GraphQLList(Item),
       description: 'Items the user created.',
       resolve: resolver(UserModel.ItemModels),
     },
   }),
 });
 
-export default UserType;
+export default User;

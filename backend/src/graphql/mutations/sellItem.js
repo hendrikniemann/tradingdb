@@ -1,11 +1,11 @@
 /* @flow */
 import { GraphQLID, GraphQLInt, GraphQLNonNull } from 'graphql';
 
-import ItemType from '../types/ItemType';
+import Item from '../types/Item';
 import { ItemModel } from '../../models';
 
 const sellItem = {
-  type: ItemType,
+  type: Item,
   description: 'Set the provided item and set the soldAt property to NOW.',
   args: {
     id: {
