@@ -3,7 +3,7 @@ import { GraphQLNonNull, GraphQLInt } from 'graphql';
 import { resolver } from 'graphql-sequelize';
 
 import UserType from '../types/UserType';
-import { UserModel } from '../models';
+import { UserModel } from '../../models';
 
 const user = {
   type: UserType,

@@ -1,7 +1,7 @@
 /* @flow */
 import { GraphQLID, GraphQLNonNull, GraphQLBoolean } from 'graphql';
 
-import ItemModel from '../models/ItemModel';
+import { ItemModel } from '../../models';
 
 const deleteItem = {
   type: GraphQLBoolean,

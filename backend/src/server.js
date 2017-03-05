@@ -5,7 +5,7 @@ import mount from 'koa-mount';
 import convert from 'koa-convert';
 import bodyParser from 'koa-bodyparser';
 import logger from 'koa-logger';
-import Schema from './Schema';
+import Schema from './graphql/Schema';
 import loginMiddleware from './middleware/login';
 import authMiddleware from './middleware/auth';
 

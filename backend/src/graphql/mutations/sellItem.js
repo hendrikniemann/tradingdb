@@ -2,7 +2,7 @@
 import { GraphQLID, GraphQLInt, GraphQLNonNull } from 'graphql';
 
 import ItemType from '../types/ItemType';
-import ItemModel from '../models/ItemModel';
+import { ItemModel } from '../../models';
 
 const sellItem = {
   type: ItemType,

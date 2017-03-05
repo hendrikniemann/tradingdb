@@ -3,7 +3,7 @@ import { GraphQLInt, GraphQLNonNull } from 'graphql';
 import { resolver } from 'graphql-sequelize';
 
 import ItemType from '../types/ItemType';
-import { ItemModel } from '../models';
+import { ItemModel } from '../../models';
 
 const item = {
   type: ItemType,

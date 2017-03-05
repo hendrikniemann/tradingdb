@@ -2,7 +2,7 @@
 import { GraphQLList } from 'graphql';
 
 import ItemType from '../types/ItemType';
-import { ItemModel } from '../models';
+import { ItemModel } from '../../models';
 
 const items = {
   type: new GraphQLList(ItemType),
