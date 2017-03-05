@@ -1,26 +1,57 @@
-import React, { PropTypes } from 'react';
-import cn from 'classnames';
+/* @flow */
+import React from 'react';
+import classnames from 'classnames';
 import moment from 'moment';
+import gql from 'graphql-tag';
 
 import castToK from '../utils/castToK';
 
-function Item({ id, description, boughtOn, soldOn, bought, sold, extended, extend }) {
+export type ItemFragmentType = {
+  id: number | string,
+  description: string,
+  boughtOn: string,
+  soldOn: ?string,
+  bought: number,
+  sold: ?number,
+};
+
+const fragments = {
+  ItemFragment: gql`
+    fragment ItemFragment on Item {
+      id
+      description
+      boughtOn
+      soldOn
+      bought
+      sold
+    }
+  `,
+};
+
+export type ItemPropType = {
+  item: ItemFragmentType,
+  extended: boolean,
+  extend: (number | string) => any,
+};
+
+function Item({ item, extended, extend }: ItemPropType) {
+  const { id, description, bought, sold, boughtOn } = item;
   const daysin = moment(boughtOn).fromNow();
 
-  if (sold !== null) {
+  if (sold) {
     const roi = Math.floor(sold / bought * 100) - 100;
     return (
-      <div className={cn('item', 'sold', { extended })} onClick={() => extend(id)}>
+      <div className={classnames('item', 'sold', { extended })} onClick={() => extend(id)}>
         <div className="text">{description}</div>
         <div className="daysin">{daysin}</div>
         <div className="rev">{castToK(sold)}</div>
         <div className="price">{castToK(bought)}</div>
-        <div className={cn('roi', roi > 0 ? 'positive' : 'negative')}>{roi}%</div>
+        <div className={classnames('roi', roi > 0 ? 'positive' : 'negative')}>{roi}%</div>
       </div>
     )
   }
   return (
-    <div className={cn('item', 'onsale', { extended })} onClick={() => extend(id)}>
+    <div className={classnames('item', 'onsale', { extended })} onClick={() => extend(id)}>
       <div className="text">{description}</div>
       <div className="daysin">{daysin}</div>
       <div className="rev"></div>
@@ -29,12 +60,6 @@ function Item({ id, description, boughtOn, soldOn, bought, sold, extended, exten
   );
 }
 
-Item.propTypes = {
-  description: PropTypes.string.isRequired,
-  bought: PropTypes.number.isRequired,
-  sold: PropTypes.number,
-  boughtOn: PropTypes.string.isRequired,
-  soldOn: PropTypes.string,
-};
+Item.fragments = fragments;
 
 export default Item;

@@ -50,7 +50,7 @@ export function MenuBar({ mutate }) {
 				<input type="text" ref={ref => input = ref} />
 				<div id="send" onClick={addItem}>
 					<svg width="36px" height="36px">﻿
-						<path fill="#E0E0E0" fill-opacity="1" stroke-width="0.2" stroke-linejoin="round" d="M 10.87505, 15.625L 16.4167,21.1667L 25.1250,10.0834L 27.5,12.4584L 16.4167,25.9167L 8.5,18L 10.8751,16.625 Z "></path>
+						<path fill="#E0E0E0" fillOpacity="1" strokeWidth="0.2" strokeLinejoin="round" d="M 10.87505, 15.625L 16.4167,21.1667L 25.1250,10.0834L 27.5,12.4584L 16.4167,25.9167L 8.5,18L 10.8751,16.625 Z "></path>
 					</svg>
 				</div>
 				<div id="menu-click">

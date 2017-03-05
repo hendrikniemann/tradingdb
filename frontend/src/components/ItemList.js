@@ -1,12 +1,23 @@
-import React, { Component, PropTypes } from 'react';
+/* @flow */
+import React, { Component } from 'react';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
+import moment from 'moment';
 
-import Item from './Item';
+import Item, { type ItemFragmentType } from './Item';
 
-const compareFn = (a, b) => {
-  if ((a.soldOn === null && b.soldOn === null) || (a.soldOn !== null && b.soldOn !== null)) {
-    return b.boughtOn - a.boughtOn;
+const ItemQuery = gql`
+  query ItemQuery {
+    items {
+      ...ItemFragment
+    }
+  }
+  ${Item.fragments.ItemFragment}
+`;
+
+const compareFn = (a: ItemFragmentType, b: ItemFragmentType) => {
+  if ((a.sold === null && b.sold === null) || (a.sold !== null && b.sold !== null)) {
+    return moment(a.boughtOn).isBefore(b.boughtOn) ? -1 : 1;
   }
   if (a.soldOn === null) {
     return -1;
@@ -14,28 +25,51 @@ const compareFn = (a, b) => {
   return 1;
 };
 
+export type ItemListPropType = {
+  data: {
+    loading: boolean,
+    error: ?any,
+    items: ?ItemFragmentType[],
+  },
+}
+
 export class ItemList extends Component {
-  constructor(props) {
+  props: ItemListPropType
+
+  state: {
+    extended: string | number | null,
+  }
+
+  constructor(props: ItemListPropType) {
     super(props);
 
     this.state = { extended: null };
-    this.extend = id => this.setState({ extended: id });
+    (this: any).extend = this.extend.bind(this);
+  }
+
+  extend(id: number | string) {
+    this.setState(({ extended }) => {
+      if (extended === id) {
+        return { extended: null }
+      }
+      return { extended: id };
+    });
   }
 
   render() {
-    if (this.props.data.error) {
-      return <div>{ this.props.data.error }</div>;
+    const { items, error } = this.props.data;
+    if (error) {
+      return <div>{error.toString()}</div>;
     }
-    const { items } = this.props.data;
-    if (this.props.data.loading && !items) {
+    if (!items) {
       return <div>Loading items...</div>;
     }
     return (
       <div className="itemlist">
         {items.slice().sort(compareFn).map(item =>
           <Item
-            {...item}
             key={item.id}
+            item={item}
             extend={this.extend}
             extended={this.state.extended === item.id}
           />
@@ -45,27 +79,4 @@ export class ItemList extends Component {
   }
 }
 
-ItemList.propTypes = {
-  data: PropTypes.shape({
-    laoding: PropTypes.bool,
-    items: PropTypes.arrayOf(
-      PropTypes.shape(Item.propTypes)
-    ),
-  }).isRequired,
-};
-
-const ItemQuery = gql`query ItemQuery {
-  items {
-    __typename
-    id
-    description
-    bought
-    sold
-    boughtOn
-    soldOn
-  }
-}`;
-
-const WrappedItemList = graphql(ItemQuery)(ItemList);
-
-export default WrappedItemList;
+export default graphql(ItemQuery)(ItemList);
