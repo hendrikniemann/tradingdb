@@ -6,11 +6,16 @@ import convert from 'koa-convert';
 import bodyParser from 'koa-bodyparser';
 import logger from 'koa-logger';
 import Schema from './graphql/Schema';
+import provideLoggerInstance from './middleware/provideLoggerInstance';
+import logErrors from './middleware/logErrors';
 import loginMiddleware from './middleware/login';
 import authMiddleware from './middleware/auth';
 
 const app = new Koa();
-app.use(convert(logger()));
+
+app.use(provideLoggerInstance());
+app.use(logErrors());
+app.use(logger());
 
 // Login endpoint provides RESTlike login API
 const loginEndpoint = new Koa();
