@@ -1,33 +1,34 @@
 /* @flow */
-/* eslint-disable no-console */
-import connection from '../src/models/connection';
-import { UserModel, ItemModel } from '../src/models/';
+const { connect, dbCreate, db } = require('rethinkdb');
 
-console.log('Create tables...');
-connection.sync({ force: true })
-  .then(() => {
-    console.log('Successfully created tables.');
-    console.log('Filling in data...');
-    UserModel.create({
-      email: 'hendrik@tradingdb.de',
-      password: 'test',
-      items: [
-        {
-          description: 'WK 99+14+21',
-          bought: 120000000,
-          sold: 140000000,
-          soldOn: Date.now(),
-        },
-        {
-          description: '45er Bow r7+8 cl',
-          bought: 16000000,
-        },
-      ],
-    }, {
-      include: [{
-        model: ItemModel,
-        as: 'items',
-      }],
-    }).then(() => console.log('Data created.'));
-  })
-  .catch((error) => { throw error; });
+module.exports = async function makeDb() {
+  const connection = await connect({ host: 'localhost', port: 28015 });
+
+  try {
+    console.log('Trying to create database `tradingdb`');
+    await dbCreate('tradingdb').run(connection);
+  } catch (e) {
+    console.log('Database already exists!');
+  }
+
+  try {
+    console.log('Trying to create table `user`');
+    await db('tradingdb').tableCreate('user').run(connection);
+  } catch (e) {
+    console.log('Table already exists!');
+  }
+
+  try {
+    console.log('Trying to create table `item`');
+    await db('tradingdb').tableCreate('item').run(connection);
+  } catch (e) {
+    console.log('Table already exists!');
+  }
+
+  await connection.close();
+};
+
+// Execute this file if it is run directly
+if (require.main === module) {
+  module.exports().then(() => {});
+}
