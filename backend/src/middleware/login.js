@@ -1,11 +1,10 @@
 /* @flow */
-import bcrypt from 'bcrypt';
+import { compare } from 'bcrypt';
 import promisify from 'es6-promisify';
 import jwt from 'jsonwebtoken';
 
 import config from '../config';
 
-const compare = promisify(bcrypt.compare);
 const sign = promisify(jwt.sign);
 
 export default async function login(ctx: any) {
