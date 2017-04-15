@@ -1,16 +1,20 @@
 /* @flow */
-import Sequelize from 'sequelize';
-import connection from './connection';
+import { table, type Connection } from 'rethinkdb';
+import Model, { type WithID } from './Model';
 
-const UserModel = connection.define('user', {
-  email: {
-    type: Sequelize.STRING,
-    allowNull: false,
-  },
-  password: {
-    type: Sequelize.STRING,
-    allowNull: false,
-  },
-});
+export type UserModelType = {|
+  email: string,
+  password: string,
+|}
 
-export default UserModel;
+export default class UserModel extends Model<UserModelType> {
+  constructor(connection: Connection) {
+    super(connection, 'user');
+  }
+
+  async getByEmail(email: string): Promise<UserModel & WithID> {
+    const result = await table('user').getAll(email, { index: 'email' }).run(this.connection);
+
+    return (await result.toArray())[0];
+  }
+}

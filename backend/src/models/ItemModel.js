@@ -1,31 +1,22 @@
 /* @flow */
-import Sequelize from 'sequelize';
-import connection from './connection';
+import { table, type Connection } from 'rethinkdb';
+import Model, { type WithID } from './Model';
 
-const ItemModel = connection.define('item', {
-  description: {
-    type: Sequelize.STRING,
-    allowNull: false,
-  },
-  bought: {
-    type: Sequelize.BIGINT,
-    allowNull: false,
-  },
-  sold: {
-    type: Sequelize.BIGINT,
-    defaultValue: null,
-  },
-  soldOn: {
-    type: Sequelize.DATE,
-    defaultValue: null,
-  },
-  boughtOn: {
-    type: Sequelize.DATE,
-    allowNull: false,
-    defaultValue: Sequelize.NOW,
-  },
-}, {
-  paranoid: true,
-});
+export type ItemModelType = {|
+  description: string,
+  boughtOn: string,
+  soldOn: ?string,
+  bought: number,
+  sold: ?number,
+|}
 
-export default ItemModel;
+export default class ItemModel extends Model<ItemModelType> {
+  constructor(connection: Connection) {
+    super(connection, 'user');
+  }
+
+  async getByOwner(id: string): Promise<Array<ItemModel & WithID>> {
+    const result = await table('item').getAll(id, { index: 'ownerId' }).run(this.connection);
+    return result.toArray();
+  }
+}
