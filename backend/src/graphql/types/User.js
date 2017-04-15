@@ -1,9 +1,5 @@
 /* @flow */
-import { GraphQLObjectType, GraphQLID, GraphQLString, GraphQLList, GraphQLNonNull } from 'graphql';
-import { resolver } from 'graphql-sequelize';
-
-import Item from './Item';
-import { UserModel } from '../../models';
+import { GraphQLObjectType, GraphQLID, GraphQLString, GraphQLNonNull } from 'graphql';
 
 const User = new GraphQLObjectType({
   name: 'User',
@@ -16,11 +12,6 @@ const User = new GraphQLObjectType({
     email: {
       type: new GraphQLNonNull(GraphQLString),
       description: 'The user\'s email address.',
-    },
-    items: {
-      type: new GraphQLList(Item),
-      description: 'Items the user created.',
-      resolve: resolver(UserModel.ItemModels),
     },
   }),
 });
