@@ -25,6 +25,7 @@ declare module 'winston' {
   }
 
   declare interface WinstonLogger {
+    constructor(options?: Object): WinstonLogger,
     level?: LogLevel,
     name?: string,
     log(
@@ -40,8 +41,8 @@ declare module 'winston' {
   }
 
   declare type WinstonDefaultLoggers = {
-    Console: WinstonLogger,
-    File: WinstonLogger,
+    Console: Class<WinstonLogger>,
+    File: Class<WinstonLogger>,
   }
 
   declare interface Logger extends Winston {

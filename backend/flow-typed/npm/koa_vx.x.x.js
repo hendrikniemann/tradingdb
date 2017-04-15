@@ -49,6 +49,7 @@ declare module 'koa' {
     state: { [key: string]: any },
     cookies: SetterGetter,
     throw(message?: string, status?: number): void,
+    throw(status?: number, message?: string): void,
     assert(value: any, message?: string, status?: number): void,
   }
 
