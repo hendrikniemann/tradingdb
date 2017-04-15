@@ -14,13 +14,13 @@ export default function logRequests(
   return async function logRequestsMiddleware(ctx, next) {
     const level = options.level || 'debug';
     const start = process.hrtime();
-    logger.log(level, `-> ${ctx.path}`);
+    logger.log(level, `-> ${ctx.method} ${ctx.path}`);
     ctx.state.logger = logger;
     await next();
     const responseTime = hrtimeToMilli(process.hrtime(start));
     logger.log(
       level,
-      `Responded to ${ctx.method} ${ctx.path} within ${responseTime} ms with status ${ctx.status}`,
+      `<- ${ctx.method} ${ctx.path} within ${responseTime} ms with status ${ctx.status}`,
     );
   };
 }

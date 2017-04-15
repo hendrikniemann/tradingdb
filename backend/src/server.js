@@ -1,11 +1,17 @@
 /* @flow */
 import { connect } from 'rethinkdb';
-import { Logger } from 'winston';
+import { Logger, transports } from 'winston';
 import app from './app';
 import config from './config';
 
+const logger = new Logger({
+  transports: [
+    new transports.Console(({ level: 'silly' })),
+  ],
+});
+
 connect(config.database)
-  .then(connection => app(connection, new Logger()))
+  .then(connection => app(connection, logger))
   .then((server) => {
     process.on('SIGTERM', async () => {
       const closeServer = () => new Promise((reject, resolve) => server.close((err) => {
