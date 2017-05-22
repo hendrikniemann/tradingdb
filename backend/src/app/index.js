@@ -2,10 +2,10 @@
 import http, { type Server } from 'http';
 import type { Connection } from 'rethinkdb';
 import { Logger } from 'winston';
-import Koa from 'koa';
+import Koa, { type Context } from 'koa';
 import mount from 'koa-mount';
 
-import attachModels from '../middleware/attachModels';
+import attachModels, { type ModelMap } from '../middleware/attachModels';
 import logRequests from '../middleware/logRequests';
 import graphQLEndpoint from './endpoints/graphql';
 import loginEndpoint from './endpoints/login';
@@ -14,6 +14,13 @@ export type ServerOptions = {
   port?: number,
   host?: string,
 };
+
+type AppContextState = {
+  models: ModelMap,
+  userId: string,
+};
+
+export type AppContext = { state: AppContextState } & Context;
 
 export default async function createApp(
   connection: Connection,

@@ -8,6 +8,8 @@ import {
   GraphQLID,
 } from 'graphql';
 import Item from './Item';
+import { isOwner } from '../../models/ItemModel';
+import type { AppContext } from '../../app';
 
 const Mutation = new GraphQLObjectType({
   name: 'Mutation',
@@ -41,8 +43,13 @@ const Mutation = new GraphQLObjectType({
           description: 'The unique id of the item.',
         },
       },
-      resolve: (parent, { id }: { id: string }, ctx) =>
-        ctx.state.models.items.delete(id),
+      async resolve(parent, { id }: { id: string }, ctx: AppContext) {
+        const item = ctx.state.models.items.load(id);
+        if (!isOwner(ctx.state.userId, item)) {
+          return new Error('You don\' have permission to delete this item.');
+        }
+        return ctx.state.models.items.delete(id);
+      },
     },
     sellItem: {
       type: Item,
@@ -57,7 +64,7 @@ const Mutation = new GraphQLObjectType({
           description: 'The price that the item was sold for.',
         },
       },
-      resolve: (parent: any, { id, sold }: { id: string, sold: number }, ctx) =>
+      resolve: (parent: any, { id, sold }: { id: string, sold: number }, ctx: AppContext) =>
         ctx.state.models.items.update(id, {
           sold,
           soldOn: new Date(),

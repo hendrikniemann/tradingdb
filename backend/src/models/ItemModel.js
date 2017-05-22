@@ -8,11 +8,19 @@ export type ItemModelType = {|
   soldOn: ?string,
   bought: number,
   sold: ?number,
+  ownerId: ?string,
 |}
+
+export function isOwner(ownerId: string, item: { ownerId: string } | Error) {
+  if (item instanceof Error) {
+    return true;
+  }
+  return item.ownerId === ownerId;
+}
 
 export default class ItemModel extends Model<ItemModelType> {
   constructor(connection: Connection) {
-    super(connection, 'user');
+    super(connection, 'item');
   }
 
   async getByOwner(id: string): Promise<Array<ItemModel & WithID>> {
