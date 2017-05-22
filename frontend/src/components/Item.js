@@ -1,8 +1,8 @@
 /* @flow */
 import React from 'react';
-import classnames from 'classnames';
 import moment from 'moment';
 import gql from 'graphql-tag';
+import { List, Label, Button } from 'semantic-ui-react';
 
 import castToK from '../utils/castToK';
 
@@ -28,35 +28,33 @@ const fragments = {
   `,
 };
 
-export type ItemPropType = {
+export type ItemPropTypes = {
   item: ItemFragmentType,
-  extended: boolean,
-  extend: (number | string) => any,
 };
 
-function Item({ item, extended, extend }: ItemPropType) {
+const RoiLabel = ({ amount }: { amount: number }) => (
+  <Label color={amount > 0 ? 'olive' : 'red'}>{amount}%</Label>
+);
+
+function Item({ item, extended, extend }: ItemPropTypes) {
   const { id, description, bought, sold, boughtOn } = item;
   const daysin = moment(boughtOn).fromNow();
 
-  if (sold) {
-    const roi = Math.floor(sold / bought * 100) - 100;
-    return (
-      <div className={classnames('item', 'sold', { extended })} onClick={() => extend(id)}>
-        <div className="text">{description}</div>
-        <div className="daysin">{daysin}</div>
-        <div className="rev">{castToK(sold)}</div>
-        <div className="price">{castToK(bought)}</div>
-        <div className={classnames('roi', roi > 0 ? 'positive' : 'negative')}>{roi}%</div>
-      </div>
-    )
-  }
+  const roi = Math.floor(1000 / bought * 100) - 100;
+  const descriptionText = `${daysin} for ${castToK(bought)}`;
   return (
-    <div className={classnames('item', 'onsale', { extended })} onClick={() => extend(id)}>
-      <div className="text">{description}</div>
-      <div className="daysin">{daysin}</div>
-      <div className="rev"></div>
-      <div className="price">{castToK(bought)}</div>
-    </div>
+    <List.Item>
+      <List.Content floated="left">
+        <List.Header>{description}</List.Header>
+        <List.Description>{descriptionText}</List.Description>
+      </List.Content>
+      <List.Content floated="left">
+        <RoiLabel amount={roi} />
+      </List.Content>
+      <List.Content floated="right">
+        <Button basic circular icon="write" />
+      </List.Content>
+    </List.Item>
   );
 }
 
