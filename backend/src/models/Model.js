@@ -17,9 +17,18 @@ export default class Model<T: Object> {
     this.tableName = tableName;
 
     type TWithID = T & WithID;
-    this.loader = new Dataloader((keys: string[]): Promise<Array<TWithID | Error>> =>
-      table(tableName).getAll(keys).run(connection).catch(error => error),
-    );
+    this.loader = new Dataloader(async (keys: string[]): Promise<Array<TWithID | Error>> => {
+      const cursor = await table(tableName).getAll(...keys).run(connection);
+      const documents = await cursor.toArray();
+
+      return keys.map((id) => {
+        const match = documents.find(document => document.id === id);
+        if (match) {
+          return match;
+        }
+        return new Error(`Could not find ${tableName} with id ${id}`);
+      });
+    });
     this.creator = new Dataloader((seeds: T[]): Promise<Array<TWithID | Error>> =>
       table(tableName)
         .insert(seeds, { returnChanges: true }).run(connection)
