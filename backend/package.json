@@ -39,6 +39,7 @@
     "koa-convert": "^1.2.0",
     "koa-graphql": "^0.7.0",
     "koa-mount": "^3.0.0",
+    "optics-agent": "^1.1.2",
     "rethinkdb": "^2.3.3",
     "winston": "^2.3.1"
   },
